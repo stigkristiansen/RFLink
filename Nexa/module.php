@@ -1,6 +1,6 @@
 <?
 
-require_once(__DIR__ . "/../TellstickUtil.php");  
+require_once(__DIR__ . "/../protocols.php");  
 require_once(__DIR__ . "/../Logging.php");
 
 class NexaSensor extends IPSModule

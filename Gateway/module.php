@@ -124,10 +124,10 @@ class RFLinkGateway extends IPSModule
 			case "fineoffset":
 				$decodedMessage = DecodeFineOffset($message);
 				break;
-			case "oregon":
+			case "oregon temphygro":
 				$decodedMessage = DecodeOregon($message);
 				break;
-			case "arctech":
+			case "newkaku":
 				$decodedMessage = DecodeNexa($message);
 				break;
 		}
