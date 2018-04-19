@@ -1,7 +1,7 @@
 <?
 
-require_once(__DIR__ . "/../libs/Logging.php");
-require_once(__DIR__ . "/../libs/Protocols.php");
+require_once(__DIR__ . "/../libs/logging.php");
+require_once(__DIR__ . "/../libs/protocols.php");
 
 class RFLinkGateway extends IPSModule
 {
