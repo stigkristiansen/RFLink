@@ -1,0 +1,16 @@
+{
+    "elements":
+    [
+        { "type": "ValidationTextBox", "name": "id", "caption": "Id" },
+	{ "type": "Select", "name": "model", "caption": "Model",
+            "options": [
+                { "label": "F824", "value": 0 },
+                { "label": "EA4C", "value": 1 },
+            ]
+	},
+	{ "type": "IntervalBox", "name": "timeout", "caption": "seconds" },
+	{ "type": "Label", "label": "Minimun time between commands before they get accepted." },
+	{ "type": "CheckBox", "name": "log", "caption": "Enable logging" }
+    ],
+
+}

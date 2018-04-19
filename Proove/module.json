@@ -1,0 +1,14 @@
+{ 
+    "id" :  "{A1F1E087-F809-4E84-B315-B8640A6427C7}" , 
+    "name" :  "Proove thermometer hygrometer" , 
+    "type" :  3 , 
+    "vendor" :  "Stig Kristiansen" , 
+    "aliases" : 
+    [ 
+        "Proove Thermometer/Hygrometer"  
+    ] ,   
+    "parentRequirements" :  ["{ED608F9C-8965-48C7-877F-F68875A4227F}"] , 
+    "childRequirements" :  [] , 
+    "implemented" :  ["{C466EF5C-68FD-4B48-B833-4D65AFF90B12}"] , 
+    "prefix" :  "TSG" 
+}
