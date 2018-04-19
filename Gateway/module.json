@@ -1,5 +1,5 @@
 { 
-    "id" :  "{655884D6-7969-4DAF-8992-637BEE9FD70D}" , 
+    "id" :  "{E3628754-90FD-494B-8BE2-E5F8C2BB2E26}" , 
     "name" :  "RFLink Gateway" , 
     "type" :  2 , 
     "vendor" :  "Stig Kristiansen" , 
@@ -10,5 +10,5 @@
     "parentRequirements" :  ["{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}"] , 
     "childRequirements" :  ["{C466EF5C-68FD-4B48-B833-4D65AFF90B12}"] , 
     "implemented" :  ["{018EF6B5-AB94-40C6-AA53-46943E824ACF}", "{ED608F9C-8965-48C7-877F-F68875A4227F}"] , 
-    "prefix" :  "TSN" 
+    "prefix" :  "RFG" 
 }
