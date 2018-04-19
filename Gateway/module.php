@@ -60,7 +60,7 @@ class RFLinkGateway extends IPSModule
 				if(ord($arr[$i])==0x0D && ord($arr[$i+1])==0x0A) {
 					$foundMessage = true;
 					
-					$message = substr($data, 2, $i-1);
+					$message = substr($data, 0, $i-1);
 					$log->LogMessage("Found message: ".$message);
 					
 					$existingMessage = false;
@@ -115,7 +115,7 @@ class RFLinkGateway extends IPSModule
     }
 	
 	private function DecodeMessage($Message) {
-		$data = explode(";", $message);
+		$data = explode(";", $Message);
 		$protocol = $data[0];
 		
 		$decodedMessage = "";
