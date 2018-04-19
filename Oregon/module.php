@@ -1,7 +1,7 @@
 <?
 
-require_once(__DIR__ . "/../protocols.php");  
-require_once(__DIR__ . "/../logging.php");
+require_once(__DIR__ . "/../libs/protocols.php");  
+require_once(__DIR__ . "/../libs/logging.php");
 
 class OregonWeatherStation extends IPSModule
 {

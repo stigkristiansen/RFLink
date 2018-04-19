@@ -1,7 +1,7 @@
 <?
 
-require_once(__DIR__ . "/../protocols.php");  
-require_once(__DIR__ . "/../Logging.php");
+require_once(__DIR__ . "/../libs/protocols.php");  
+require_once(__DIR__ . "/../libs/logging.php");
 
 class NexaSensor extends IPSModule
 {
