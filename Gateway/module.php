@@ -73,7 +73,6 @@ class RFLinkGateway extends IPSModule
 			try{
 				if($this->SupportedMessage($message)) {
 					$this->SendDataToChildren(json_encode(Array("DataID" => "{C466EF5C-68FD-4B48-B833-4D65AFF90B12}", "Buffer" => $message)));
-					$log->LogMessage("Message sent to children: ".$message);
 				} else
 					$log->LogMessage("The protocol in the message is not supported");
 			}catch(Exeption $ex){
