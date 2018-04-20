@@ -64,6 +64,7 @@ class RFLinkGateway extends IPSModule
 		if($start!==false) {	
 			$message = "";
 			for($i=$start;$i<$max-1;$i++) {
+				$log->LogMessage("Searching for end marker. Evaluating: ".$arr[$i]);
 				if($arr[$i]==$crlf) {
 					$foundMessage = true;
 					break;
