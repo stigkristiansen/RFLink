@@ -52,20 +52,23 @@ class RFLinkGateway extends IPSModule
 		$arr = str_split($data);
 		$max = sizeof($arr);
 		
+		$start = false;
 		for($i=0;$i<$max-1;$i++) {
 			if($arr[$i]=="20") {
 				$start = $i;
 				break;
 			}
 		}
-				
-		$message = "";
-		for($i=$start;$i<$max-1;$i++) {
-			if($arr[$i]==$crlf) {
-				$foundMessage = true;
-				break;
+		
+		if($start!==false) {	
+			$message = "";
+			for($i=$start;$i<$max-1;$i++) {
+				if($arr[$i]==$crlf) {
+					$foundMessage = true;
+					break;
+				}
+				$message .= $arr[$i];
 			}
-			$message .= $arr[$i];
 		}
 		
 		if($foundMessage) {
@@ -86,7 +89,7 @@ class RFLinkGateway extends IPSModule
 			}
 		} 
 
-		
+
 		/*do{
 			$foundMessage = false;
 			$arr = explode(";", $data);;
