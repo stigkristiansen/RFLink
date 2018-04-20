@@ -43,7 +43,7 @@ class ProoveThermometerHygrometer extends IPSModule
         }
 		
 		$dataArray = Explode($message, ";");
-        $protocol = dataArray[2];
+        $protocol = $dataArray[2];
 
 		if(stripos($protocol, "fineoffset")!==false) {
 			$log->LogMessage("Analyzing the message and updating values...");
