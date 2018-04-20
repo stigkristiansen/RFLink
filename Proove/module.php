@@ -61,6 +61,8 @@ class ProoveThermometerHygrometer extends IPSModule
 		$myId = $this->ReadPropertyInteger("id");
 		
 		if($myId==$id) {
+			$log->LogMessage("This is my Id");
+			
 			$temperature = ConvertTemperature(GetParameter("temp", $message));
 			SetValueFloat($this->GetIDForIdent("Temperature"), $temperature);
 			$log->LogMessage("The temperature value was set to ".$temperature);
@@ -74,7 +76,7 @@ class ProoveThermometerHygrometer extends IPSModule
 				SetValueInteger($humidityId, $humidity);
 				$log->LogMessage("The humidity value was set to ".$humidity);
 			}
-		} else 
+		} elseif($myId>0)
 			$log->LogMessage("Wrong Id. This is not me!"); 
     }
 }
