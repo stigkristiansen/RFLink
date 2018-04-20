@@ -72,6 +72,7 @@ class ProoveThermometerHygrometer extends IPSModule
 					$humidityId= $this->RegisterVariableInteger( "Humidity", "Humidity", "~Humidity", 1 );
 				
 				SetValueInteger($humidityId, $humidity);
+				$log->LogMessage("The humidity value was set to ".$humidity);
 			}
 		} else 
 			$log->LogMessage("Wrong Id. This is not me!"); 
