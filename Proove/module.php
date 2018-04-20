@@ -20,6 +20,8 @@ class ProoveThermometerHygrometer extends IPSModule
     {
         parent::ApplyChanges();
 
+		$log = new Logging($this->ReadPropertyBoolean("log"), IPS_Getname($this->InstanceID));
+		
         $this->RegisterVariableFloat( "Temperature", "Temperature", "~Temperature", 0 );
 				
 		$id = $this->ReadPropertyInteger("id");
