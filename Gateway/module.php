@@ -47,7 +47,7 @@ class RFLinkGateway extends IPSModule
 		
 		$log->LogMessage("Searching for a complete message...");	
 		
-		$crlf = ord(0x0D).ord(0x0A);
+		$crlf = chr(0x0D).chr(0x0A);
 		$foundMessage = false;
 		$arr = explode(";", $data);
 		$max = sizeof($arr);
@@ -85,12 +85,13 @@ class RFLinkGateway extends IPSModule
 				} else
 					$log->LogMessage("The protocol in the message is not supported");
 			}catch(Exeption $ex){
-				$log->LogMessageError("Failed to send message to all children! Error: ".$ex->getMessage());
+				$log->LogMessageError("Failed to send message to all children Error: ".$ex->getMessage());
 				$this->Unlock("ReceiveLock");
 		
 				return false;
 			}
-		} 
+		}
+			
 
 		/*do{
 			$foundMessage = false;
