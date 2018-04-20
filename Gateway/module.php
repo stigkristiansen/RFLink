@@ -43,6 +43,7 @@ class RFLinkGateway extends IPSModule
 
 		$data = $this->GetBuffer("SerialBuffer");
 		$data .= $incomingBuffer;
+		$log->LogMessage("New buffer is: ".$data);
 		
 		$pos = strpos($data, "20;");
 		if($pos!==false && $pos == 0) {
@@ -88,6 +89,7 @@ class RFLinkGateway extends IPSModule
 			$log->LogMessage("No complete message yet...");
 		
 		$this->SetBuffer("SerialBuffer", $data);
+		$log->LogMessage("New buffer after search is: ".$data);
 				
 		$this->Unlock("ReceiveLock");
 		
