@@ -5,7 +5,7 @@
     "vendor" :  "Stig Kristiansen" , 
     "aliases" : 
     [ 
-        "Proove Thermometer/Hygrometer"  
+        "RFLink Proove Thermometer/Hygrometer"  
     ] ,   
     "parentRequirements" :  ["{ED608F9C-8965-48C7-877F-F68875A4227F}"] , 
     "childRequirements" :  [] , 
