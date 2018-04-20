@@ -42,12 +42,12 @@ class RFLinkGateway extends IPSModule
 			$log->LogMessage("Buffer is locked");
 
 		$data = $this->GetBuffer("SerialBuffer");
+		$data .= $incomingBuffer;
+		
 		$pos = strpos($data, "20;");
 		if($pos!==false && $pos == 0) {
 			$data = substr($data, 6);
 		}
-		
-		$data .= $incomingBuffer;
 		
 		$log->LogMessage("Searching for a complete message...");	
 		do{
