@@ -45,15 +45,51 @@ class RFLinkGateway extends IPSModule
 		$data .= $incomingBuffer;
 		$log->LogMessage("New buffer is: ".$data);
 		
-		/*$pos = strpos($data, "20;");
-		if($pos!==false && $pos == 0) {
-			$data = substr($data, 6);
-		}
-		*/
 		$log->LogMessage("Searching for a complete message...");	
-		do{
+		
+		$crlf = ord(0x0D).ord(0x0A);
+		$foundMessage = false;
+		$arr = str_split($data);
+		$max = sizeof($arr);
+		
+		for($i=0;$i<$max-1;$i++) {
+			if($arr[$i]=="20") {
+				$start = $i
+				break;
+			}
+		}
+				
+		$message = "";
+		for($i=$start;$i<$max-1;$i++) {
+			if($arr[$i]==$crlf) {
+				$foundMessage = true;
+				break;
+			}
+			$message .= $arr[$i];
+		}
+		
+		if($foundMessage) {
+			$log->LogMessage("Found message: ".$message);
+			$this->SetBuffer("SerialBuffer", "");
+			
+			try{
+				if($this->SupportedMessage($message)) {
+					$this->SendDataToChildren(json_encode(Array("DataID" => "{F746048C-AAB6-479D-AC48-B4C08875E5CF}", "Buffer" => $message)));
+					$log->LogMessage("Message sent to children: ".$message);
+				} else
+					$log->LogMessage("The protocol in the message is not supported");
+			}catch(Exeption $ex){
+				$log->LogMessageError("Failed to send message to all children. Error: ".$ex->getMessage());
+				$this->Unlock("ReceiveLock");
+		
+				return false;
+			}
+		} 
+
+		
+		/*do{
 			$foundMessage = false;
-			$arr = str_split($data);
+			$arr = explode(";", $data);;
 			$max = sizeof($arr);
 			for($i=0;$i<$max-1;$i++) {
 				if(ord($arr[$i])==0x0D && ord($arr[$i+1])==0x0A) {
@@ -84,6 +120,7 @@ class RFLinkGateway extends IPSModule
 				} 
 			}
 		} while($foundMessage && strlen($data)>0);
+		*/
 		
 		if(!$foundMessage)
 			$log->LogMessage("No complete message yet...");
