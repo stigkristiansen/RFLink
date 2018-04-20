@@ -69,7 +69,7 @@ class RFLinkGateway extends IPSModule
 					$foundMessage = true;
 					break;
 				}
-				$message .= $arr[$i];
+				$message .= $arr[$i].";";
 			}
 		} else
 			$log->LogMessage("Did not find the start marker!");
