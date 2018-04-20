@@ -45,11 +45,11 @@ class RFLinkGateway extends IPSModule
 		$data .= $incomingBuffer;
 		$log->LogMessage("New buffer is: ".$data);
 		
-		$pos = strpos($data, "20;");
+		/*$pos = strpos($data, "20;");
 		if($pos!==false && $pos == 0) {
 			$data = substr($data, 6);
 		}
-		
+		*/
 		$log->LogMessage("Searching for a complete message...");	
 		do{
 			$foundMessage = false;
@@ -98,7 +98,7 @@ class RFLinkGateway extends IPSModule
 	
 	private function SupportedMessage($Message) {
 		$data = explode(";", $Message);
-		$protocol = $data[0];
+		$protocol = $data[2];
 		
 		switch(strtolower($protocol)) {
 			case "fineoffset":
