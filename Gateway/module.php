@@ -54,7 +54,7 @@ class RFLinkGateway extends IPSModule
 		
 		$start = false;
 		for($i=0;$i<$max;$i++) {
-			$log->LogMessage("Searching for start marker. Evaluating: ".$arr[$i]);
+			//$log->LogMessage("Searching for start marker. Evaluating: ".$arr[$i]);
 			if($arr[$i]=="20") {
 				$start = $i;
 				break;
@@ -64,7 +64,7 @@ class RFLinkGateway extends IPSModule
 		if($start!==false) {	
 			$message = "";
 			for($i=$start;$i<$max;$i++) {
-				$log->LogMessage("Searching for end marker. Evaluating: ".$arr[$i]);
+				//$log->LogMessage("Searching for end marker. Evaluating: ".$arr[$i]);
 				if($arr[$i]==$crlf) {
 					$foundMessage = true;
 					break;
@@ -76,8 +76,10 @@ class RFLinkGateway extends IPSModule
 		
 		if($foundMessage) {
 			$log->LogMessage("Found message: ".$message);
+
 			$this->SetBuffer("SerialBuffer", "");
-			
+			$log->LogMessage("Buffer is reset");
+
 			try{
 				if($this->SupportedMessage($message)) {
 					$this->SendDataToChildren(json_encode(Array("DataID" => "{F746048C-AAB6-479D-AC48-B4C08875E5CF}", "Buffer" => $message)));
