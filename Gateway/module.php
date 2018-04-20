@@ -53,8 +53,8 @@ class RFLinkGateway extends IPSModule
 		$max = sizeof($arr);
 		
 		$start = false;
-		for($i=0;$i<$max-1;$i++) {
-			$log->LogMessage("Evaluating: ".$arr[$i]);
+		for($i=0;$i<$max;$i++) {
+			$log->LogMessage("Searching for start marker. Evaluating: ".$arr[$i]);
 			if($arr[$i]=="20") {
 				$start = $i;
 				break;
@@ -63,7 +63,7 @@ class RFLinkGateway extends IPSModule
 		
 		if($start!==false) {	
 			$message = "";
-			for($i=$start;$i<$max-1;$i++) {
+			for($i=$start;$i<$max;$i++) {
 				$log->LogMessage("Searching for end marker. Evaluating: ".$arr[$i]);
 				if($arr[$i]==$crlf) {
 					$foundMessage = true;
@@ -72,7 +72,7 @@ class RFLinkGateway extends IPSModule
 				$message .= $arr[$i];
 			}
 		} else
-			$log->LogMessage("Did not find a start marker!");
+			$log->LogMessage("Did not find the start marker!");
 		
 		if($foundMessage) {
 			$log->LogMessage("Found message: ".$message);
