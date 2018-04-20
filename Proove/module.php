@@ -12,9 +12,7 @@ class ProoveThermometerHygrometer extends IPSModule
         parent::Create();
         $this->ConnectParent("{655884D6-7969-4DAF-8992-637BEE9FD70D}");
 		
-		//$this->RegisterPropertyInteger ("model", 0 );
 		$this->RegisterPropertyInteger ("id", 0 );
-		$this->RegisterPropertyInteger ("timeout", 2 );
 		$this->RegisterPropertyBoolean ("log", false );
     }
 
@@ -23,14 +21,12 @@ class ProoveThermometerHygrometer extends IPSModule
         parent::ApplyChanges();
 
         $this->RegisterVariableFloat( "Temperature", "Temperature", "~Temperature", 0 );
-		//$this->RegisterVariableInteger( "Last", "Last", "", 2 );
-		//IPS_SetHidden($this->GetIDForIdent('Last'), true);
-		
-		//.*;protocol:fineoffset;id:\d*;model:temperature;.*
-		
+				
 		$id = $this->ReadPropertyInteger("id");
-		$this->SetReceiveDataFilter(".*;protocol:fineoffset;id:".$id.";model:temperature.*;.*");
-		
+		if($id>0) {
+			$idHex = str_pad(dechex($id),4,"0",STR_PAD_LEFT);
+			//$this->SetReceiveDataFilter("^[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*");
+		}
     }
 	
     public function ReceiveData($JSONString) {
@@ -41,64 +37,40 @@ class ProoveThermometerHygrometer extends IPSModule
         
         $log->LogMessage("Received ".$message);
         
-        if($data->DataID!="{F746048C-AAB6-479D-AC48-B4C08875E5CF}") {
+        if($data->DataID!="{C466EF5C-68FD-4B48-B833-4D65AFF90B12}") {
         	$log->LogMessage("This is not for me! (unsupported GUID in DataID)");
         	return;
         }
-
-        $protocol = GetParameter("protocol", $message);
+		
+		$dataArray = Explode($message, ";");
+        $protocol = dataArray[2];
 
 		if(stripos($protocol, "fineoffset")!==false) {
-			//$decodedMessage = DecodeFineOffset($message);
-			//$log->LogMessage("Decoded message: ".$decodedMessage);
 			$log->LogMessage("Analyzing the message and updating values...");
 		} else {
 			$log->LogMessage("This is not for me! (unsupported protocol: ".$protocol.")");
 			return;
 		}
-	
-		//if(strlen($decodedMessage)>0) {
-		if(strlen($message)>0) {
-			//$model = GetParameter("model", $decodedMessage);
-			//$id = intval(GetParameter("id", $decodedMessage));
+		
+		$id = hexdec(GetParameter("id", $message));
+		$log->LogMessage("Received command from: ".$id);
+		$myId = $this->ReadPropertyInteger("id");
+		
+		if($myId==$id) {
+			$temperature = ConvertTemperature(GetParameter("temp", $message));
+			SetValueFloat($this->GetIDForIdent("Temperature"), $temperature);
+			$log->LogMessage("The temperature value was set to ".$temperature);
 			
-			$model = GetParameter("model", $message);
-			$id = intval(GetParameter("id", $message));
-			
-			$log->LogMessage("Received command from: ".$model.":".$id);
-			
-			$myId = $this->ReadPropertyInteger("id");
-			
-			if($myId==$id) {
-				$interval = $this->ReadPropertyInteger("timeout");
-				$now = time();
-						
-				$lastProcessed = intval($this->GetBuffer("LastProcessed"));
-				if($lastProcessed+$interval<$now) {
-					
-					$temperature = GetParameter("temp", $message);
-					SetValueFloat($this->GetIDForIdent("Temperature"), $temperature);
-					$log->LogMessage("The temperature value was set to ".$temperature);
-					
-					if($model=="temperaturehumidity") {
-						$humidity = GetParameter("humidity", $message);
-						$humidityId = $this->GetIDForIdent("Humidity");
-						if($humidityId==false)
-							$humidityId= $this->RegisterVariableInteger( "Humidity", "Humidity", "~Humidity", 1 );
-						
-						SetValueInteger($humidityId, $humidity);
-					}
-					
-					$this->SetBuffer("LastProcessed", $now);
-					
-				} else
-					$log->LogMessage("To many messages in the last ".$interval." seconds. Skipping the message");
-			} else 
-				$log->LogMessage("This is not me!"); 
-	
-		} else {
-			$log->LogMessage("Unsupported model");
-		}
+			$humidity = GetParameter("hum", $message);
+			if(strlen($humidity)>0) {
+				$humidityId = $this->GetIDForIdent("Humidity");
+				if($humidityId==false)
+					$humidityId= $this->RegisterVariableInteger( "Humidity", "Humidity", "~Humidity", 1 );
+				
+				SetValueInteger($humidityId, $humidity);
+			}
+		} else 
+			$log->LogMessage("Wrong Id. This is not me!"); 
     }
 }
 

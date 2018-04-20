@@ -5,19 +5,27 @@ function GetParameter($Parameter, $Message) {
 	$max = sizeof($arr);
 
 	for($i=0;$i<$max;$i++){
-	   if(stripos($arr[$i], $Parameter.":")!==false){
+	   if(stripos($arr[$i], $Parameter."=")!==false){
 			break;
 	   }
 	}
 
 	if($i<$max){
-		$startPos = stripos($arr[$i], ":")+1;
+		$startPos = stripos($arr[$i], "=")+1;
 		$value = substr($arr[$i], $startPos);
 		return $value;
 	} else {
 	   return "";
 	}
 
+}
+
+function ConvertTemperature($Value) {
+	$temp = (hexdec($Value) && 0x00FF)/10;
+	if(($Value && 8000)==8000)
+		$temp *= -1;
+	
+	return $temp;
 }
 
 function DecodeNexa($Message){
