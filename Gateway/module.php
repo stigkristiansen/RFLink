@@ -62,7 +62,7 @@ class RFLinkGateway extends IPSModule
 					$log->LogMessage("Found message: ".$message);
 					
 						try{
-							if(SupportedMessage($message)) {
+							if($this->SupportedMessage($message)) {
 								$this->SendDataToChildren(json_encode(Array("DataID" => "{F746048C-AAB6-479D-AC48-B4C08875E5CF}", "Buffer" => $message)));
 								$log->LogMessage("Message sent to children: ".$message);
 							} else
