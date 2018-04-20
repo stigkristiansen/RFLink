@@ -25,7 +25,9 @@ class ProoveThermometerHygrometer extends IPSModule
 		$id = $this->ReadPropertyInteger("id");
 		if($id>0) {
 			$idHex = str_pad(dechex($id),4,"0",STR_PAD_LEFT);
-			//$this->SetReceiveDataFilter("^[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*");
+			$receiveFilter = "^[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*";
+			$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
+			//$this->SetReceiveDataFilter($receiveFilter);
 		}
     }
 	
@@ -42,7 +44,7 @@ class ProoveThermometerHygrometer extends IPSModule
         	return;
         }
 		
-		$dataArray = Explode($message, ";");
+		$dataArray = Explode(";", $message);
         $protocol = $dataArray[2];
 
 		if(stripos($protocol, "fineoffset")!==false) {
