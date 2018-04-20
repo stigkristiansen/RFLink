@@ -29,8 +29,6 @@ class RFLinkGateway extends IPSModule
     
 
     public function ReceiveData($JSONString) {
-		$messages = array();
-		
 		$incomingData = json_decode($JSONString);
 		$incomingBuffer = utf8_decode($incomingData->Buffer);
 			
@@ -63,16 +61,6 @@ class RFLinkGateway extends IPSModule
 					$message = substr($data, 0, $i-1);
 					$log->LogMessage("Found message: ".$message);
 					
-					$existingMessage = false;
-					$xMax = sizeof($messages); 
-					for($x=0;$x<$xMax;$x++) { 
-						if($message==$messages[$x]) {
-							$existingMessage = true;
-							break;
-						} 
-					}		     					     	
-					
-					if(!$existingMessage){
 						try{
 							$decodedMessage = $this->DecodeMessage($message);
 							if(strlen($decodedMessage) > 0) {
@@ -83,14 +71,10 @@ class RFLinkGateway extends IPSModule
 						}catch(Exeption $ex){
 							$log->LogMessageError("Failed to send message to all children. Error: ".$ex->getMessage());
 							$this->Unlock("ReceiveLock");
-							unset($messages);
+					
 							return false;
 						}
 						
-						$messages[]=$message;
-						$log->LogMessage("Recorded message for later search. Number of stored messages:".sizeof($messages));
-					} else
-						$log->LogMessage("Message already sent. Skipping...");
 					
 					if($i!=$max-2)
 						$data = substr($data, $i+2);
@@ -105,11 +89,6 @@ class RFLinkGateway extends IPSModule
 		$this->SetBuffer("SerialBuffer", $data);
 				
 		$this->Unlock("ReceiveLock");
-		
-		if(sizeof($messages)==0)
-			$log->LogMessage("No message found");
-		
-		unset($messages);
 		
 		return true;
     }
