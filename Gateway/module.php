@@ -80,10 +80,12 @@ class RFLinkGateway extends IPSModule
 						$data = "";
 					   
 					break;
-				} else
-					$log->LogMessage("No complete message yet...");
+				} 
 			}
 		} while($foundMessage && strlen($data)>0);
+		
+		if(!$foundMessage)
+			$log->LogMessage("No complete message yet...");
 		
 		$this->SetBuffer("SerialBuffer", $data);
 				
