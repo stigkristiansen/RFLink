@@ -69,7 +69,8 @@ class RFLinkGateway extends IPSModule
 				}
 				$message .= $arr[$i];
 			}
-		}
+		} else
+			$log->LogMessage("Did not find a start marker!");
 		
 		if($foundMessage) {
 			$log->LogMessage("Found message: ".$message);
@@ -88,7 +89,6 @@ class RFLinkGateway extends IPSModule
 				return false;
 			}
 		} 
-
 
 		/*do{
 			$foundMessage = false;
