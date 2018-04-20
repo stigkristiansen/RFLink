@@ -27,7 +27,7 @@ class ProoveThermometerHygrometer extends IPSModule
 		$id = $this->ReadPropertyInteger("id");
 		if($id>0) {
 			$idHex = str_pad(dechex($id),4,"0",STR_PAD_LEFT);
-			$receiveFilter = "^[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*";
+			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*";
 			$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
 			$this->SetReceiveDataFilter($receiveFilter);
 		}
