@@ -54,7 +54,7 @@ class RFLinkGateway extends IPSModule
 		
 		for($i=0;$i<$max-1;$i++) {
 			if($arr[$i]=="20") {
-				$start = $i
+				$start = $i;
 				break;
 			}
 		}
