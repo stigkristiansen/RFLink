@@ -90,6 +90,11 @@ class RFLinkGateway extends IPSModule
 		
 				return false;
 			}
+		} else {
+			$log->LogMessage("No complete message yet...");
+			
+			$this->SetBuffer("SerialBuffer", $data);
+			$log->LogMessage("New buffer after search is: ".$data);
 		}
 			
 
@@ -126,14 +131,14 @@ class RFLinkGateway extends IPSModule
 				} 
 			}
 		} while($foundMessage && strlen($data)>0);
-		*/
+		
 		
 		if(!$foundMessage)
 			$log->LogMessage("No complete message yet...");
 		
 		$this->SetBuffer("SerialBuffer", $data);
 		$log->LogMessage("New buffer after search is: ".$data);
-				
+		*/		
 		$this->Unlock("ReceiveLock");
 		
 		return true;
