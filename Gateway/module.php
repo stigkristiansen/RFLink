@@ -85,7 +85,7 @@ class RFLinkGateway extends IPSModule
 				} else
 					$log->LogMessage("The protocol in the message is not supported");
 			}catch(Exeption $ex){
-				$log->LogMessageError("Failed to send message to all children. Error: ".$ex->getMessage());
+				$log->LogMessageError("Failed to send message to all children! Error: ".$ex->getMessage());
 				$this->Unlock("ReceiveLock");
 		
 				return false;
