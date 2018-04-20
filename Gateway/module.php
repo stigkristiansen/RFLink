@@ -62,10 +62,9 @@ class RFLinkGateway extends IPSModule
 					$log->LogMessage("Found message: ".$message);
 					
 						try{
-							$decodedMessage = $this->DecodeMessage($message);
-							if(strlen($decodedMessage) > 0) {
-								$this->SendDataToChildren(json_encode(Array("DataID" => "{F746048C-AAB6-479D-AC48-B4C08875E5CF}", "Buffer" => $decodedMessage)));
-								$log->LogMessage("Decoded message sent to children: ".$decodedMessage);
+							if(SupportedMessage($message)) {
+								$this->SendDataToChildren(json_encode(Array("DataID" => "{F746048C-AAB6-479D-AC48-B4C08875E5CF}", "Buffer" => $message)));
+								$log->LogMessage("Message sent to children: ".$message);
 							} else
 								$log->LogMessage("The protocol in the message is not supported");
 						}catch(Exeption $ex){
@@ -74,7 +73,6 @@ class RFLinkGateway extends IPSModule
 					
 							return false;
 						}
-						
 					
 					if($i!=$max-2)
 						$data = substr($data, $i+2);
@@ -82,7 +80,8 @@ class RFLinkGateway extends IPSModule
 						$data = "";
 					   
 					break;
-				}
+				} else
+					$log->LogMessage("No complete message yet...");
 			}
 		} while($foundMessage && strlen($data)>0);
 		
@@ -92,6 +91,25 @@ class RFLinkGateway extends IPSModule
 		
 		return true;
     }
+	
+	private function SupportedMessage($Message) {
+		$data = explode(";", $Message);
+		$protocol = $data[0];
+		
+		switch(strtolower($protocol)) {
+			case "fineoffset":
+				return true;
+				break;
+			case "oregon temphygro":
+				return true;
+				break;
+			case "newkaku":
+				return true;
+				break;
+		}
+		
+		return false;
+	}
 	
 	private function DecodeMessage($Message) {
 		$data = explode(";", $Message);
