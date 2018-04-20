@@ -21,8 +21,8 @@ function GetParameter($Parameter, $Message) {
 }
 
 function ConvertTemperature($Value) {
-	$temp = (hexdec($Value) && 0x00FF)/10;
-	if(($Value && 8000)==8000)
+	$temp = (hexdec($Value) & 0x00FF)/10;
+	if(($Value & 8000)==8000)
 		$temp *= -1;
 	
 	return $temp;
