@@ -27,9 +27,9 @@ class NexaSensor extends IPSModule
 		$unit = $this->ReadPropertyInteger ("unit");
 		
 		if($house>0 && $unit>0)
-			$receiveFilter = "*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;ID=0{0,}".strtolower(dechex($house)).";SWITCH=0{0,}".strtolower(dechex($unit)).";CMD=(ON|OFF);.*";
+			$receiveFilter = ".*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;ID=0{0,}".strtolower(dechex($house)).";SWITCH=0{0,}".strtolower(dechex($unit)).";CMD=(ON|OFF);.*";
 		else
-			$receiveFilter = "*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;ID=[0-9A-Fa-f]*;SWITCH=[0-9A-Fa-f]*;CMD=(ON|OFF);.*";
+			$receiveFilter = ".*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;ID=[0-9A-Fa-f]*;SWITCH=[0-9A-Fa-f]*;CMD=(ON|OFF);.*";
 			
 		$this->SetReceiveDataFilter($receiveFilter);
 		$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
