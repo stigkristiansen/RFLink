@@ -26,9 +26,9 @@ class OregonWeatherStation extends IPSModule
 		$id = $this->ReadPropertyInteger("id");
 		
 		if($id>0)
-			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};Oregon TempHygro;ID=\d*".dechex($id)."\d*;TEMP=\d*;HUM=\d*;HSTATUS=\d;BAT=(OK|LOW);.*/i";
+			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};Oregon TempHygro;ID=\d*".dechex($id)."\d*;TEMP=\d*;HUM=\d*;HSTATUS=\d;BAT=(OK|LOW);.*";
 		else
-			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};Oregon TempHygro;ID=\d*;TEMP=\d*;HUM=\d*;HSTATUS=\d;BAT=(OK|LOW);.*/i";
+			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};Oregon TempHygro;ID=\d*;TEMP=\d*;HUM=\d*;HSTATUS=\d;BAT=(OK|LOW);.*";
 		
 		$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
 		$this->SetReceiveDataFilter($receiveFilter);
