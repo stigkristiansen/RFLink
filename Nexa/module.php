@@ -54,22 +54,17 @@ class NexaSensor extends IPSModule
 		$unit = intval(GetParameter("switch", $message));
 		$house = intval(GetParameter("id", $message));
 					
-		$log->LogMessage("Received command from: ".$house.":".$unit);
+		$log->LogMessage("Received command from: house ".$house."and unit ".$unit);
 						
 		$myUnit = $this->ReadPropertyInteger("unit");
 		$myHouse = $this->ReadPropertyInteger("house");
-			
-		//$log->LogMessage("I am:".$myHouse.":".$myUnit);
 			
 		if($myUnit==$unit && $myHouse==$house) {
 			$command = strtoupper(GetParameter("cmd", $message));
 			SetValueBoolean($this->GetIDForIdent("Status"), ($command=='ON'?true:false)); 
 			$log->LogMessage("The Status value was set to ".$command);
-		} elseif($myUnit>0 && $myHouse>0)) {
+		} elseif($myUnit>0 && $myHouse>0)
 			$log->LogMessage("Wrong House and Unit Id. This is not me!");
-		}
-	
-		
     }
 
 }
