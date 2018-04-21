@@ -2,10 +2,8 @@
     "elements":
     [
         { "type": "ValidationTextBox", "name": "house", "caption": "House" },
-	{ "type": "ValidationTextBox", "name": "unit", "caption": "Unit" },
-	{ "type": "IntervalBox", "name": "timeout", "caption": "seconds" },
-	{ "type": "Label", "label": "Minimun time between commands before they get accepted." },
-	{ "type": "CheckBox", "name": "log", "caption": "Enable logging" }
+		{ "type": "ValidationTextBox", "name": "unit", "caption": "Unit" },
+		{ "type": "CheckBox", "name": "log", "caption": "Enable logging" }
     ],
 
 }

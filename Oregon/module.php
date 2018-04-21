@@ -32,8 +32,8 @@ class OregonWeatherStation extends IPSModule
 		else
 			$receiveFilter = ".*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};Oregon TempHygro;ID=[0-9A-Fa-f]*;TEMP=[0-9A-Fa-f]{4};HUM=\d{1,2};HSTATUS=\d;BAT=(OK|LOW);.*";
 		
-		$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
 		$this->SetReceiveDataFilter($receiveFilter);
+		$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
 		
 		
     }
@@ -54,7 +54,7 @@ class OregonWeatherStation extends IPSModule
 		$log->LogMessage("Analyzing the message and updating values...");
 
 		$id = hexdec(GetParameter("id", $message));
-		$log->LogMessage("Received message from Id ".$id);
+		$log->LogMessage("Received message from a device with id ".$id);
 		$myId = $this->ReadPropertyInteger("id");
 		
 		if($myId==$id) {

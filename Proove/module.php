@@ -59,7 +59,7 @@ class ProoveThermometerHygrometer extends IPSModule
 		}
 		
 		$id = hexdec(GetParameter("id", $message));
-		$log->LogMessage("Received message from Id ".$id);
+		$log->LogMessage("Received message from a device with id ".$id);
 		$myId = $this->ReadPropertyInteger("id");
 		
 		if($myId==$id) {
