@@ -54,7 +54,7 @@ class NexaSensor extends IPSModule
 		$unit = hexdec(GetParameter("switch", $message));
 		$house = hexdec(GetParameter("id", $message));
 					
-		$log->LogMessage("Received command from: house ".$house.", unit ".$unit);
+		$log->LogMessage("Received command from house ".$house.", unit ".$unit);
 						
 		$myUnit = $this->ReadPropertyInteger("unit");
 		$myHouse = $this->ReadPropertyInteger("house");
