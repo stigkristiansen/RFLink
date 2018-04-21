@@ -23,6 +23,8 @@ class OregonWeatherStation extends IPSModule
         $this->RegisterVariableInteger( "Humidity", "Humidity", "~Humidity", 1 );
         $this->RegisterVariableFloat( "Temperature", "Temperature", "~Temperature", 0 );
 		
+		$log = new Logging($this->ReadPropertyBoolean("log"), IPS_Getname($this->InstanceID));
+		
 		$id = $this->ReadPropertyInteger("id");
 		
 		if($id>0)
