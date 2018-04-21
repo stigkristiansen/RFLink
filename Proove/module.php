@@ -27,10 +27,12 @@ class ProoveThermometerHygrometer extends IPSModule
 		$id = $this->ReadPropertyInteger("id");
 		if($id>0) {
 			$idHex = str_pad(dechex($id),4,"0",STR_PAD_LEFT);
-			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*";
-			$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
-			$this->SetReceiveDataFilter($receiveFilter);
-		}
+			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=".$idHex.";TEMP=.*/i";
+		} else 
+			$receiveFilter = ".*[0-9A-F]{2};[0-9A-F]{2};FineOffset;ID=\d*;TEMP=.*/i";
+		
+		$log->LogMessage("ReceiveDataFilter set to ".$receiveFilter);
+		$this->SetReceiveDataFilter($receiveFilter);
     }
 	
     public function ReceiveData($JSONString) {
@@ -57,7 +59,7 @@ class ProoveThermometerHygrometer extends IPSModule
 		}
 		
 		$id = hexdec(GetParameter("id", $message));
-		$log->LogMessage("Received command from Id ".$id);
+		$log->LogMessage("Received message from Id ".$id);
 		$myId = $this->ReadPropertyInteger("id");
 		
 		if($myId==$id) {
