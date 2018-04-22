@@ -25,9 +25,9 @@ class NexaSensor extends IPSModule
 		
 		$house = $this->ReadPropertyInteger ("house");
 		$unit = $this->ReadPropertyInteger ("unit");
-		
+		$identity = "ID=0{0,}(".strtolower(dechex($house))."|".strtoupper(dechex($house)).");SWITCH=0{0,}(".strtolower(dechex($unit))."|".strtoupper(dechex($unit)).")";
 		if($house>0 && $unit>0)
-			$receiveFilter = ".*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;ID=0{0,}".strtolower(dechex($house)).";SWITCH=0{0,}".strtolower(dechex($unit)).";CMD=(ON|OFF);.*";
+			$receiveFilter = ".*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;".$identity.";CMD=(ON|OFF);.*";
 		else
 			$receiveFilter = ".*[0-9A-Fa-f]{2};[0-9A-Fa-f]{2};NewKaku;ID=[0-9A-Fa-f]*;SWITCH=[0-9A-Fa-f]*;CMD=(ON|OFF);.*";
 			
@@ -60,11 +60,12 @@ class NexaSensor extends IPSModule
 		$myHouse = $this->ReadPropertyInteger("house");
 			
 		if($myUnit==$unit && $myHouse==$house) {
+			$log->LogMessage("This is my house and unit id");
 			$command = strtoupper(GetParameter("cmd", $message));
 			SetValueBoolean($this->GetIDForIdent("Status"), ($command=='ON'?true:false)); 
 			$log->LogMessage("The Status value was set to ".$command);
 		} elseif($myUnit>0 && $myHouse>0)
-			$log->LogMessage("Wrong House and Unit Id. This is not me!");
+			$log->LogMessage("Wrong house and unit Id. This is not me!");
     }
 
 }
