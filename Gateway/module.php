@@ -71,7 +71,7 @@ class RFLinkGateway extends IPSModule
 			$log->LogMessage("Buffer is reset");
 
 			try{
-				if($this->SupportedMessage($message)) {
+				if(SupportedMessage($message)) {
 					$log->LogMessage("Sending the message to children");
 					$this->SendDataToChildren(json_encode(Array("DataID" => "{C466EF5C-68FD-4B48-B833-4D65AFF90B12}", "Buffer" => $message)));
 				} else
@@ -93,25 +93,6 @@ class RFLinkGateway extends IPSModule
 		
 		return true;
     }
-	
-	private function SupportedMessage($Message) {
-		$data = explode(";", $Message);
-		$protocol = $data[2];
-		
-		switch(strtolower($protocol)) {
-			case "fineoffset":
-				return true;
-				break;
-			case "oregon temphygro":
-				return true;
-				break;
-			case "newkaku":
-				return true;
-				break;
-		}
-		
-		return false;
-	}
  
     private function Lock($ident){
         for ($i = 0; $i < 100; $i++){
@@ -129,7 +110,7 @@ class RFLinkGateway extends IPSModule
     private function Unlock($ident){
         IPS_SemaphoreLeave("RFL_".(string)$this->InstanceID.(string)$ident);
 		$log = new Logging($this->ReadPropertyBoolean("log"), IPS_Getname($this->InstanceID));
-		$log->LogMessage("Buffer is unlocked");
+		$log->LogMessage("Buffer lock is released");
     }
 }
 

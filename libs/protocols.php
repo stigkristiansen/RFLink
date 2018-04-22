@@ -27,6 +27,25 @@ function ConvertTemperature($Value) {
 	return $temp;
 }
 
+function SupportedMessage($Message) {
+	$data = explode(";", $Message);
+	$protocol = $data[2];
+	
+	switch(strtolower($protocol)) {
+		case "fineoffset":
+			return true;
+			break;
+		case "oregon temphygro":
+			return true;
+			break;
+		case "newkaku":
+			return true;
+			break;
+	}
+	
+	return false;
+}
+
 
 
 ?>
